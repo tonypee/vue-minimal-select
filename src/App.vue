@@ -4,7 +4,7 @@
       <h2>Single Select</h2>
       <h4>Selected: {{selectedPerson}}</h4>
       <x-select
-        :options="[{ id:1, name: 'John' }, { id:2, name: 'Phil' }, { id:3, name: 'paul' }]"
+        :options="data"
         v-model="selectedPerson"
         label-from="name"
         value-from="id"
@@ -16,7 +16,7 @@
       <h2>Multi Select</h2>
       <h4>Selected: {{selectedPeople}}</h4>
       <x-select
-        :options="[{ id:1, name: 'John' }, { id:2, name: 'Phil' }, { id:3, name: 'paul' }]"
+        :options="data"
         v-model="selectedPeople"
         :multiple="true"
         label-from="name"
@@ -35,6 +35,7 @@ export default {
   },
   data() {
     return {
+      data: [{ id: 1, name: 'John' }, { id: 2, name: 'Phil' }, { id: 3, name: 'paul' }],
       selectedPerson: 2,
       selectedPeople: [],
     }
