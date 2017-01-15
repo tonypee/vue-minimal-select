@@ -106,16 +106,17 @@
             value: option,
           }
         })
+      },
+      labelMap() {
+        return this.optionObjects.reduce((o, v) => {
+          o[v.value] = v.label
+          return o
+        }, {})
       }
     },
     methods: {
-      findOption(value) {
-        return this.optionObjects.find(o => o.value === value)
-      },
-
       getLabel(value) {
-        const obj = this.findOption(value)
-        return obj && obj.label
+        return this.labelMap[value]
       },
 
       select(value) {
