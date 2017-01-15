@@ -98,7 +98,7 @@
     computed: {
       optionObjects() {
         return this.options.map(option => {
-          return isObject({option}) ? {
+          return isObject(option) ? {
             label: option[this.labelFrom],
             value: option[this.valueFrom],
           } : {
