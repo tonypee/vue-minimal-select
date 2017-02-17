@@ -8,6 +8,7 @@
         v-model="selectedPerson"
         label-from="name"
         value-from="id"
+        :show-search="true"
       >
       <hr />
     </div>

@@ -1,7 +1,7 @@
 <style scoped lang="less">
 .select-container {
   position: relative;
-  ul.select-menu {
+  div.select-menu {
     z-index: 999;
     list-style-type: none;
     margin: 0;
@@ -63,11 +63,14 @@
       </button>
     </slot>
     <slot name="select-menu">
-      <ul class="select-menu" v-show="show" @click="onClick">
-        <div v-for="option of optionObjects">
+      <div class="select-menu" v-show="show" @click="onClick">
+        <span v-if="!multiple && showSearch">
+          <input v-model="search" ref="search" class="search" placeholder="Search Items..." />
+        </span>
+        <div v-for="option of filteredObjects">
           <a @click="select(option.value)">{{ option.label }}</a>
         </div>
-      </ul>
+      </div>
     </slot>
   </div>
 </template>
@@ -87,15 +90,22 @@
       placeholder: { type: String, default: '- Select -' },
       valueFrom: { type: String, default: 'value' },
       labelFrom: { type: String, default: 'label' },
+      showSearch: { type: Boolean, default: false },
     },
     directives: { ClickOutside },
     data() {
       return {
         show: false,
         disabled: false,
+        search: '',
       }
     },
     computed: {
+      filteredObjects() {
+        return this.optionObjects.filter(o => {
+          return !this.search.length || ~o.label.toLowerCase().indexOf(this.search.toLowerCase())
+        })
+      },
       optionObjects() {
         return this.options.map(option => {
           return isObject(option) ? {
@@ -141,7 +151,10 @@
         this.hide()
       },
 
-      onClick() {
+      onClick(e) {
+        if (e.target === this.$refs.search) {
+          return
+        }
         this.hide()
       },
 
